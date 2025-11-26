@@ -65,6 +65,9 @@ def f2(x):
 def df2(x):
     return 1 / (np.cos(x)**2)
 
+# tan(x) tem período π, então as raízes estão espaçadas por π
+# Primeira raiz positiva está em arctan(0.5) ≈ 0.4636
+
 solucoes_2 = []
 base = np.arctan(0.5)
 
@@ -92,17 +95,18 @@ axes[0].set_title('Desafio 1: 2^x = x²')
 axes[0].legend()
 axes[0].set_ylim(0, 20)
 
-x2 = np.linspace(0, 5*np.pi, 1000)
+x2 = np.linspace(0.1, 5*np.pi, 1000)
 y_tan = np.tan(x2)
 y_tan = np.where(np.abs(y_tan) > 10, np.nan, y_tan)
+y_inv = 1/x2
 axes[1].plot(x2, y_tan, 'b-', linewidth=2, label='tan(x)')
-axes[1].axhline(y=0.5, color='r', linestyle='--', linewidth=2, label='y = 1/2')
+axes[1].plot(x2, y_inv, 'r-', linewidth=2, label='1/x')
 for sol in solucoes_2:
-    axes[1].plot(sol, 0.5, 'go', markersize=10)
+    axes[1].plot(sol, 1/sol, 'go', markersize=10)
 axes[1].grid(True, alpha=0.3)
 axes[1].set_xlabel('x (rad)')
 axes[1].set_ylabel('y')
-axes[1].set_title('Desafio 2: tan(x) = 1/2')
+axes[1].set_title('Desafio 2: tan(x) = 1/x')
 axes[1].legend()
 axes[1].set_ylim(-3, 3)
 
