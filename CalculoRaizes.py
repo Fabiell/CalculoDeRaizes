@@ -55,12 +55,12 @@ for x0 in pontos_iniciais_1:
 print(f"\nTotal de soluções encontradas: {len(solucoes_1)}")
 
 print("\n" + "=" * 60)
-print("DESAFIO 2: tan(x) = 1/2")
-print("Transformando em: f(x) = tan(x) - 1/2 = 0")
+print("DESAFIO 2: tan(x) = 1/x")
+print("Transformando em: f(x) = tan(x) - 1/x = 0")
 print("=" * 60)
 
 def f2(x):
-    return np.tan(x) - 0.5
+    return np.tan(x) - 1/x
 
 def df2(x):
     return 1 / (np.cos(x)**2)
