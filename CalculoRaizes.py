@@ -82,14 +82,37 @@ def f2(x):
 
 chutes_f2 = [0.5, 4.5, 7.7, 10.9, 14.1] 
 
-print(f"\nUsando derivada centrada (mais precisa):")
-print(f"{'─' * 70}")
+resultados_desafio2 = {}
+
+print(f"\nComparando métodos de derivada para cada raiz:")
+print(f"{'=' * 70}")
+
 for i, chute in enumerate(chutes_f2, 1):
-    raiz, iter = newton_raphson(f2, chute, derivada_centrada, tol=1e-10)
-    if raiz is not None:
-        print(f"  Raiz {i}: x* = {raiz:10.8f} | f(x*) = {f2(raiz):.2e} | Iterações: {iter}")
-    else:
-        print(f"  Raiz {i}: Não foi possível encontrar a raiz com chute inicial {chute}.")
+    print(f"\nRaiz {i} (Chute inicial: {chute}):")
+    print(f"{'─' * 30}")
+    resultados_desafio2[i] = {}
+    
+    for nome_metodo, metodo in metodos:
+        raiz, iteracoes = newton_raphson(f2, chute, metodo, tol=1e-10)
+        
+        if raiz is not None:
+            print(f"  {nome_metodo:8}: x* = {raiz:10.8f} | Iterações: {iteracoes}")
+            resultados_desafio2[i][nome_metodo] = iteracoes
+        else:
+            print(f"  {nome_metodo:8}: Não convergiu.")
+            resultados_desafio2[i][nome_metodo] = None
+
+print(f"\n{'=' * 70}")
+print("RESUMO COMPARATIVO (Iterações até convergência):")
+for i in resultados_desafio2:
+    res = resultados_desafio2[i]
+    partes = []
+    for nome, iters in res.items():
+        if iters is not None:
+            partes.append(f"{nome} ({iters})")
+        else:
+            partes.append(f"{nome} (Falhou)")
+    print(f"Raiz {i}: {', '.join(partes)}")
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
